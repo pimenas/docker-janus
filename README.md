@@ -1,25 +1,9 @@
 # docker-janus
-`docker-janus` is a Debian 8 based docker image for [Meetecho's Janus Gateway](https://github.com/meetecho/janus-gateway)
-
-## Description
-All the janus docker builds I have seen in hub.docker.com were all ubuntu based and/or of some redhat flavor. I successfully build janus in debian 7 and 8 before, so I thought it would be a good way to practice docker best practices and provide a debian based image at the same time.
-
-For the automated build go to [hub.docker.com](https://hub.docker.com/r/mcroth/docker-janus/)
-
-You can use this image directly from [hub.docker.com](https://hub.docker.com/r/mcroth/docker-janus/) by issuing the following docker commands:
-```
-docker pull mcroth/docker-janus:latest
-```
-
-UPDATE: Added a new branch with `tklx/base` as the build image which drastically reduces the docker image size. Both `latest` and `tklx` tags are available from the [hub](https://hub.docker.com/r/mcroth/docker-janus/).
-
-Many thanks for [meetecho](http://www.meetecho.com) for providing us [Janus Gateway](https://github.com/meetecho/janus-gateway)!
-
-I have tried to build the image with docker best practices at hand. Should there be anything of note you notices, please do not hesitate to leave a comment!
+`docker-janus` is an Ubuntu based docker image for [Pimenas's Janus Gateway](https://github.com/pimenas/janus-gateway) fork
 
 ## quickstart 
 ```
-root@mcroth:~/sandbox# git clone https://github.com/krull/docker-janus.git
+root@mcroth:~/sandbox# git clone https://github.com/pimenas/docker-janus.git
 Cloning into 'docker-janus'...
 remote: Counting objects: 69, done.
 remote: Compressing objects: 100% (53/53), done.
