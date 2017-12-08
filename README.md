@@ -1,34 +1,34 @@
 # docker-janus
-`docker-janus` is an Ubuntu based docker image for [Pimenas's Janus Gateway](https://github.com/pimenas/janus-gateway) fork
+`docker-janus` is an Debian based docker image for [Pimenas's Janus Gateway](https://github.com/pimenas/janus-gateway) fork
 
 ## quickstart 
 ```
-root@mcroth:~/sandbox# git clone https://github.com/pimenas/docker-janus.git
+root@pimenas:~/sandbox# git clone https://github.com/pimenas/docker-janus.git
 Cloning into 'docker-janus'...
 remote: Counting objects: 69, done.
 remote: Compressing objects: 100% (53/53), done.
 remote: Total 69 (delta 19), reused 59 (delta 13), pack-reused 0
 Unpacking objects: 100% (69/69), done.
 Checking connectivity... done.
-root@mcroth:~/sandbox# cd docker-janus/
-root@mcroth:~/sandbox/docker-janus# docker-compose up -d
+root@pimenas:~/sandbox# cd docker-janus/
+root@pimenas:~/sandbox/docker-janus# docker-compose up -d
 Creating network "dockerjanus_front-tier" with driver "bridge"
 Creating network "dockerjanus_back-tier" with driver "bridge"
-Pulling janus-gateway (mcroth/docker-janus:latest)...
-latest: Pulling from mcroth/docker-janus
+Pulling janus-gateway (pimenas/docker-janus:latest)...
+latest: Pulling from pimenas/docker-janus
 43c265008fae: Pull complete
 9ee7f339f682: Pull complete
 Digest: sha256:2ad4234b7255b52150d06ac231edff635102fa47c90f714b66ae37885f9f64d3
-Status: Downloaded newer image for mcroth/docker-janus:latest
+Status: Downloaded newer image for pimenas/docker-janus:latest
 Creating janus-gateway
-root@mcroth:~/sandbox/docker-janus# docker-compose ps
+root@pimenas:~/sandbox/docker-janus# docker-compose ps
     Name              Command          State                       Ports                      
 ---------------------------------------------------------------------------------------------
 janus-gateway   /opt/janus/bin/janus   Up      0.0.0.0:8088->8088/tcp, 0.0.0.0:8188->8188/tcp 
-root@mcroth:~/sandbox/docker-janus# docker images
+root@pimenas:~/sandbox/docker-janus# docker images
 REPOSITORY            TAG                 IMAGE ID            CREATED             SIZE
-mcroth/docker-janus   latest              1dd697edcb76        23 minutes ago      232.9 MB
-root@mcroth:~/sandbox/docker-janus# 
+pimenas/docker-janus   latest              1dd697edcb76        23 minutes ago      232.9 MB
+root@pimenas:~/sandbox/docker-janus#
 ```
 
 Visiting `http://localhost:8088/janus/info` in your browser should provide you with the build info of janus in JSON format.
@@ -73,6 +73,6 @@ Plugins:
 
 Example build with `rabbitmq`, `paho-mqtt`, `boringssl` enabled, and `data-channels` disabled:
 ```
-root@mcroth:~/sandbox/docker-janus# docker build --build-arg JANUS_WITH_BORINGSSL=1 --build-arg JANUS_WITH_PAHOMQTT=1 --build-arg JANUS_WITH_RABBITMQ=1 --build-arg JANUS_WITH_DATACHANNELS=0 -t mcroth/docker-janus:latest .
+root@pimenas:~/sandbox/docker-janus# docker build --build-arg JANUS_WITH_BORINGSSL=1 --build-arg JANUS_WITH_PAHOMQTT=1 --build-arg JANUS_WITH_RABBITMQ=1 --build-arg JANUS_WITH_DATACHANNELS=0 -t pimenas/docker-janus:latest .
 ```
 
