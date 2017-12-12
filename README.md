@@ -1,5 +1,5 @@
 # docker-janus
-`docker-janus` is an Debian based docker image for [Pimenas's Janus Gateway](https://github.com/pimenas/janus-gateway) fork
+`docker-janus` is an Ubuntu based docker image for [Pimenas's Janus Gateway](https://github.com/pimenas/janus-gateway) fork
 
 ## quickstart 
 ```

@@ -3,8 +3,8 @@
 # https://github.com/pimenas/docker-janus
 ############################################################
 
-# set base image debian jessie
-FROM debian:jessie
+# set base image ubuntu trusty
+FROM ubuntu:trusty
 
 # file maintainer author
 MAINTAINER pimenas@gmail.com
@@ -111,7 +111,7 @@ RUN \
     && make install \
     ; fi \
 # build libwebsockets
-    && if [ $JANUS_WITH_WEBSOCKETS = "1" ]; then git clone https://github.com/warmcat/libwebsockets.git ${BUILD_SRC}/libwebsockets \
+    && if [ $JANUS_WITH_WEBSOCKETS = "1" ]; then git clone -b v2.4-stable https://github.com/warmcat/libwebsockets.git ${BUILD_SRC}/libwebsockets \
     && cd ${BUILD_SRC}/libwebsockets \
 #    && git checkout v1.5-chrome47-firefox41 \
     && mkdir ${BUILD_SRC}/libwebsockets/build \
