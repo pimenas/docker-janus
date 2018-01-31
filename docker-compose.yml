@@ -5,8 +5,7 @@ services:
     image: pimenas/docker-janus:latest
     container_name: janus-gateway
     volumes:
-      - ./janus/etc/janus/:/opt/janus/etc/janus/
-      - ./janus/janus.log:/var/log/janus.log
+      - ./etc/janus/:/opt/janus/etc/janus/
     ports:
       - 8088:8088
       - 8188:8188
