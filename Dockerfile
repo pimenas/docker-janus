@@ -3,8 +3,8 @@
 # https://github.com/pimenas/docker-janus
 ############################################################
 
-# set base image ubuntu trusty
-FROM ubuntu:trusty
+# set base image ubuntu xenial
+FROM ubuntu:xenial
 
 # file maintainer author
 MAINTAINER pimenas@gmail.com
@@ -28,9 +28,7 @@ ARG JANUS_WITH_FREESWITCH_PATCH="0"
 ARG JANUS_CONFIG_DEPS="\
     --prefix=/opt/janus \
     "
-ARG JANUS_CONFIG_OPTIONS="\
-    --disable-plugin-lua \
-    "
+ARG JANUS_CONFIG_OPTIONS=""
 ARG JANUS_BUILD_DEPS_DEV="\
     libcurl4-openssl-dev \
     libjansson-dev \
@@ -41,6 +39,8 @@ ARG JANUS_BUILD_DEPS_DEV="\
     libopus-dev \
     libogg-dev \
     pkg-config \
+    libconfig-dev \
+    liblua5.3-dev \
     "
 ARG JANUS_BUILD_DEPS_EXT="\
     libavutil-dev \
@@ -55,6 +55,8 @@ ARG JANUS_BUILD_DEPS_EXT="\
     ca-certificates \
     curl \
     "
+
+COPY ./ ${BUILD_SRC}/janus-gateway
 
 RUN \
 # init build env & install apt deps
@@ -83,9 +85,9 @@ RUN \
     && DEBIAN_FRONTEND=noninteractive apt-get update \
     && DEBIAN_FRONTEND=noninteractive apt-get -y --no-install-recommends install $JANUS_BUILD_DEPS_DEV ${JANUS_BUILD_DEPS_EXT} \
 # build libsrtp
-    && curl -fSL https://github.com/cisco/libsrtp/archive/v2.0.0.tar.gz -o ${BUILD_SRC}/v2.0.0.tar.gz \
-    && tar xzf ${BUILD_SRC}/v2.0.0.tar.gz -C ${BUILD_SRC} \
-    && cd ${BUILD_SRC}/libsrtp-2.0.0 \
+    && curl -fSL https://github.com/cisco/libsrtp/archive/v2.2.0.tar.gz -o ${BUILD_SRC}/v2.2.0.tar.gz \
+    && tar xzf ${BUILD_SRC}/v2.2.0.tar.gz -C ${BUILD_SRC} \
+    && cd ${BUILD_SRC}/libsrtp-2.2.0 \
     && ./configure --prefix=/usr --enable-openssl \
     && make shared_library \
     && make install \
@@ -114,10 +116,10 @@ RUN \
 # build libwebsockets
     && if [ $JANUS_WITH_WEBSOCKETS = "1" ]; then git clone -b v2.4-stable https://github.com/warmcat/libwebsockets.git ${BUILD_SRC}/libwebsockets \
     && cd ${BUILD_SRC}/libwebsockets \
-#    && git checkout v1.5-chrome47-firefox41 \
+    && git checkout v3.1-stable \
     && mkdir ${BUILD_SRC}/libwebsockets/build \
     && cd ${BUILD_SRC}/libwebsockets/build \
-    && cmake -DCMAKE_INSTALL_PREFIX:PATH=/usr -DCMAKE_C_FLAGS="-fpic" .. \
+    && cmake -DLWS_MAX_SMP=1 -DCMAKE_INSTALL_PREFIX:PATH=/usr -DCMAKE_C_FLAGS="-fpic" .. \
     && make \
     && make install \
     ; fi \
@@ -138,7 +140,7 @@ RUN \
     && make install \
     ; fi \
 # build janus-gateway
-    && git clone -b auvious/v0.3.1.5 https://github.com/pimenas/janus-gateway.git ${BUILD_SRC}/janus-gateway \
+    && git clone -b auvious/v0.7.0-beta https://github.com/pimenas/janus-gateway.git ${BUILD_SRC}/janus-gateway \
     && if [ $JANUS_WITH_FREESWITCH_PATCH = "1" ]; then curl -fSL https://raw.githubusercontent.com/krull/docker-misc/master/init_fs/tmp/janus_sip.c.patch -o ${BUILD_SRC}/janus-gateway/plugins/janus_sip.c.patch && cd ${BUILD_SRC}/janus-gateway/plugins && patch < janus_sip.c.patch; fi \
     && cd ${BUILD_SRC}/janus-gateway \
     && ./autogen.sh \
