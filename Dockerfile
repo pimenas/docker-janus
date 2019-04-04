@@ -56,8 +56,6 @@ ARG JANUS_BUILD_DEPS_EXT="\
     curl \
     "
 
-COPY ./ ${BUILD_SRC}/janus-gateway
-
 RUN \
 # init build env & install apt deps
     export JANUS_WITH_POSTPROCESSING="${JANUS_WITH_POSTPROCESSING}"\
