@@ -138,7 +138,7 @@ RUN \
     && make install \
     ; fi \
 # build janus-gateway
-    && git clone -b auvious/v0.7.0-beta https://github.com/pimenas/janus-gateway.git ${BUILD_SRC}/janus-gateway \
+    && git clone -b auvious/sip-reinvites https://github.com/pimenas/janus-gateway.git ${BUILD_SRC}/janus-gateway \
     && if [ $JANUS_WITH_FREESWITCH_PATCH = "1" ]; then curl -fSL https://raw.githubusercontent.com/krull/docker-misc/master/init_fs/tmp/janus_sip.c.patch -o ${BUILD_SRC}/janus-gateway/plugins/janus_sip.c.patch && cd ${BUILD_SRC}/janus-gateway/plugins && patch < janus_sip.c.patch; fi \
     && cd ${BUILD_SRC}/janus-gateway \
     && ./autogen.sh \
